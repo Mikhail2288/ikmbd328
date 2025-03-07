@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${program.id == null} ? 'Add Program' : 'Edit Program'">Program Form</title>
+</head>
+<body>
+<h1 th:text="${program.id == null} ? 'Add Program' : 'Edit Program'">Program Form</h1>
+<form th:action="${program.id == null} ? '/programs' : '/programs'"
+      th:object="${program}" method="post">
+    <input type="hidden" th:if="${program.id != null}" th:field="*{id}"/>
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}" required/>
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    <br><br>
+    <button type="submit">Save</button>
+</form>
+<br>
+<a href="/programs">Back to Programs List</a>
+</body>
+</html>
