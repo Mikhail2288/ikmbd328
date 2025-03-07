@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${client.id == null} ? 'Add Client' : 'Edit Client'">Client Form</title>
+</head>
+<body>
+<h1 th:text="${client.id == null} ? 'Add Client' : 'Edit Client'">Client Form</h1>
+<form th:action="${client.id == null} ? '/clients' : '/clients'"
+      th:object="${client}" method="post">
+    <input type="hidden" th:if="${client.id != null}" th:field="*{id}"/>
+
+    <!-- Поле "Title" -->
+    <label for="title">Title:</label>
+    <input type="text" id="title" th:field="*{title}" required/>
+    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+    <br><br>
+
+    <!-- Поле "Trainer" -->
+    <label for="trainer">Trainer:</label>
+    <select id="trainer" th:field="*{trainer}" required>
+        <option value="">-- Select Trainer --</option>
+        <option th:each="trainer : ${trainers}"
+                th:value="${trainer.id}"
+                th:text="${trainer.name}"></option>
+    </select>
+    <span th:if="${#fields.hasErrors('trainer')}" th:errors="*{trainer}"></span>
+    <br><br>
+
+    <!-- Поле "Program" -->
+    <label for="program">Program:</label>
+    <select id="program" th:field="*{program}" required>
+        <option value="">-- Select Program --</option>
+        <option th:each="program : ${programs}"
+                th:value="${program.id}"
+                th:text="${program.name}"></option>
+    </select>
+    <span th:if="${#fields.hasErrors('program')}" th:errors="*{program}"></span>
+    <br><br>
+
+    <button type="submit">Save</button>
+</form>
+<br>
+<a href="/clients">Back to Clients List</a>
+</body>
+</html>
